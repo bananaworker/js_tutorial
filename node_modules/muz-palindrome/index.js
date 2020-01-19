@@ -16,13 +16,17 @@ function Phrase (content) {
 
   // Returns letters only from string.
   this.letters = function letters() {
-    let lettersRegex = /[a-z]/ig
+    const lettersRegex = /[a-z]/ig;
     return ((this.content).match(lettersRegex) || []).join("");
   }
 
   // Returns true for palindrome, false otherwise
   this.palindrome = function palindrome() {
-    return this.processedContent() === this.processedContent().reverse();
+    if (this.processedContent()) {
+      return this.processedContent() === this.processedContent().reverse();
+    } else {
+      return false;
+    }
   }
 
 }
