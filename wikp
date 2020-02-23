@@ -1,0 +1,31 @@
+#!/usr/local/bin/node
+
+// Get the paragraph text out of a wikipedia url and remove references
+
+let request = require("request");
+let url = process.argv[2];
+
+// Parse the HTML so it can be made into a DOM
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+
+// Request the body of the URL
+request(url, function (error, response, body) {
+
+  // Create a DOM
+  let { document } = (new JSDOM(body)).window;
+
+  // Select all paragraph and references from said DOM
+  let paragraphs = document.querySelectorAll("p")
+  let references = document.querySelectorAll(".reference")
+
+  // Remove references
+  references.forEach(function(reference) {
+    reference.remove();
+  });
+
+  // Print paragraphs
+  paragraphs.forEach(function(paragraph){
+    console.log(paragraph.textContent);
+  })
+});
